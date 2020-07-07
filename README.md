@@ -1,2 +1,2 @@
 # arboles
-Librería de árboles binarios en C
+Librería de árboles binarios con datos enteros en C
