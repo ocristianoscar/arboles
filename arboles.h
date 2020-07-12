@@ -8,8 +8,8 @@
 
 //----------------estructura principal
 
-typedef struct{
-    int dato;                   //este dato se puede cambiar por el que se necesite
+typedef struct nodoArbol{
+    int dato;                   
     struct nodoArbol * izq;
     struct nodoArbol * der;
 }nodoArbol;
@@ -18,10 +18,29 @@ typedef struct{
 
 //----------------prototipados de funciones
 
-nodoArbol * inicArbol();
-nodoArbol * crearNodoArbol(int);
-nodoArbol * insertar(nodoArbol*, int);
-void mostrarNodoArbol(nodoArbol*);
+//                                             DONE
+//funciones de manipulación del arbol
+nodoArbol * inicArbol();                        //      
+nodoArbol * insertar(nodoArbol*, int);          //
+nodoArbol * buscar(nodoArbol*, int);            //
+nodoArbol * borrar(nodoArbol*, int);            // no anda del todo bien, a veces falla
+nodoArbol * balancearArbol(nodoArbol*);
+nodoArbol * crearNodoArbol(int);                //
+int datoRandomArbol();
+
+//funciones de muestra del arbol
+void mostrarNodoArbol(nodoArbol*);              //
+void mostrarPreOrden(nodoArbol*);               //
+void mostrarInOrden(nodoArbol*);                //
+void mostrarPostOrden(nodoArbol*);              //
+void mostrarArbol(nodoArbol*);
+
+//funciones de información del arbol
+int cantNiveles(nodoArbol*);
+int cantNodos(nodoArbol*);
+int cantHojas(nodoArbol*);
+nodoArbol * nodoExtremoDerecho(nodoArbol*);     //
+nodoArbol * nodoExtremoIzquierdo(nodoArbol*);   //
 
 
 
