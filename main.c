@@ -16,7 +16,7 @@ int main()
 
     nodoArbol * nodo = crearNodoArbol(5);
 
-    mostrarNodoArbol(nodo);
+    //mostrarNodoArbol(nodo);
 
     printf("\n");
 
@@ -29,14 +29,18 @@ int main()
 
     mostrarInOrden(arbol);
 
-    printf("\n\ncual desea borrar? ");
+    printf("\nla cantidad de niveles del arbol es de %i", cantNiveles(arbol));
+    printf("\nla cantidad de nodos del arbol es de %i", cantNodos(arbol));
+    printf("\nla cantidad de hojas del arbol es de %i", cantHojas(arbol));
+
+    /*printf("\n\ncual desea borrar? ");
     fflush(stdin);
     int op;
     scanf("%i", &op);
 
     borrar(arbol, op);
 
-    mostrarInOrden(arbol);
+    mostrarInOrden(arbol);*/
 
     printf("\n");
 

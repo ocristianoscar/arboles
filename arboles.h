@@ -26,7 +26,7 @@ nodoArbol * buscar(nodoArbol*, int);            //
 nodoArbol * borrar(nodoArbol*, int);            // no anda del todo bien, a veces falla
 nodoArbol * balancearArbol(nodoArbol*);
 nodoArbol * crearNodoArbol(int);                //
-int datoRandomArbol();
+int datoRandomArbol();                          //
 
 //funciones de muestra del arbol
 void mostrarNodoArbol(nodoArbol*);              //
@@ -36,9 +36,9 @@ void mostrarPostOrden(nodoArbol*);              //
 void mostrarArbol(nodoArbol*);
 
 //funciones de información del arbol
-int cantNiveles(nodoArbol*);
-int cantNodos(nodoArbol*);
-int cantHojas(nodoArbol*);
+int cantNiveles(nodoArbol*);                    //
+int cantNodos(nodoArbol*);                      //
+int cantHojas(nodoArbol*);                      //
 nodoArbol * nodoExtremoDerecho(nodoArbol*);     //
 nodoArbol * nodoExtremoIzquierdo(nodoArbol*);   //
 

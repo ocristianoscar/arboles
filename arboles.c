@@ -70,7 +70,7 @@ nodoArbol * borrar(nodoArbol* arbol, int dato)
                     arbol->izq = borrar(arbol->izq, dato); 
                 }
                 else
-                {
+                {   
                     nodoArbol * aux = arbol;
                     free(aux);
                     arbol = NULL;
@@ -89,6 +89,22 @@ nodoArbol * borrar(nodoArbol* arbol, int dato)
     return arbol;
 }
 
+//balancea un arbol binario
+nodoArbol * balancearArbol(nodoArbol * arbol)
+{
+    /*
+     *pasar todos los datos ordenados a un arreglo
+     *cortar el arreglo a la mitad. El numero de la mitad será la raiz del arbol
+     **aqui hay que considerar que pasa si es numero par o impar, o si son 1 o 2 elementos
+     *poner la raiz como primer elemento de un nuevo arreglo.
+     **al final, este arreglo representa un arbol mostrado en pre-orden
+     *volver a hacer esta operación con cada una de las mitades hasta que solo quede 1 elemento
+     *se ingresan los elementos del arreglo y se crea un nuevo arbol
+     **de esta forma entra primero la raiz, luego los hijos, y estos a su vez son nuevos sub-arboles
+     *de esta forma queda un arbol balanceado
+    */
+}
+
 //devuelve un puntero a un nodoArbol con el valor entero ingresado por parámetro como dato
 nodoArbol * crearNodoArbol(int dato)
 {
@@ -101,7 +117,7 @@ nodoArbol * crearNodoArbol(int dato)
     return aux;
 }
 
-//función no terminada
+//devuelve un int random entre 0 y 100
 int datoRandomArbol(){
     int dato = rand()%100;
     return dato;
@@ -165,6 +181,61 @@ void mostrarPostOrden(nodoArbol * arbol)
 
 
 //--------FUNCIONES DE INFORMACIÓN DEL ARBOL
+
+//devuelve la cantidad de niveles del arbol
+int cantNiveles(nodoArbol * arbol)
+{
+    int izq, der, niveles = 0;
+
+    if (arbol != NULL)
+    {
+        izq = 1 + cantNiveles(arbol->izq);
+        der = 1 + cantNiveles(arbol->der);
+
+        if (izq > der)
+            niveles = izq;
+        else
+            niveles = der;
+    }
+
+    return niveles;
+}
+
+//devuelve la cantidad de nodos de un arbol
+int cantNodos(nodoArbol * arbol)
+{
+    int nodos = 0;
+
+    if (arbol != NULL)
+    {
+        nodos++;
+        nodos += cantNodos(arbol->izq);
+        nodos += cantNodos(arbol->der);
+    }
+
+    return nodos;    
+}
+
+//devuelve la cantidad de hojas de un arbol
+int cantHojas(nodoArbol * arbol)
+{
+    int hojas = 0;
+
+    if (arbol != NULL)
+    {
+        if ((arbol->der == NULL) && (arbol->izq == NULL))
+        {
+            hojas++;
+        }
+        else
+        {
+            hojas += cantHojas(arbol->izq);
+            hojas += cantHojas(arbol->der);
+        }
+        
+        return hojas;
+    }
+}
 
 //devuelve un puntero al nodo más a la derecha de un arbol pasado por referencia
 nodoArbol * nodoExtremoDerecho(nodoArbol * arbol)
