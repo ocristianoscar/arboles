@@ -59,7 +59,7 @@ nodoArbol * borrar(nodoArbol* arbol, int dato)
             {
                 nodoArbol * nodoMasIzq = nodoExtremoIzquierdo(arbol->der);
                 arbol->dato = nodoMasIzq->dato;
-                arbol->der = borrar(arbol->der, dato); 
+                arbol->der = borrar(arbol->der, nodoMasIzq->dato);
             }
             else
             {
@@ -67,10 +67,10 @@ nodoArbol * borrar(nodoArbol* arbol, int dato)
                 {
                     nodoArbol * nodoMasDer = nodoExtremoDerecho(arbol->izq);
                     arbol->dato = nodoMasDer->dato;
-                    arbol->izq = borrar(arbol->izq, dato); 
+                    arbol->izq = borrar(arbol->izq, nodoMasDer->dato);
                 }
                 else
-                {   
+                {
                     nodoArbol * aux = arbol;
                     free(aux);
                     arbol = NULL;
@@ -85,7 +85,7 @@ nodoArbol * borrar(nodoArbol* arbol, int dato)
                 arbol->izq = borrar(arbol->izq, dato);
         }
     }
-        
+
     return arbol;
 }
 
@@ -123,6 +123,36 @@ int datoRandomArbol(){
     return dato;
 }
 
+//crea un arreglo de enteros con tamaño justo para almacenar todos los elementos del arbol
+//se vale de la siguiente función para completar el arreglo, y lo devuelve
+int * arbolToArray(nodoArbol * arbol)
+{
+    int * arbolArray = (int*)malloc(sizeof(cantNodos(arbol)));
+    int validos = 0;
+
+    if(arbol != NULL)
+    {
+        nodoToArray(arbol, arbolArray, &validos);
+    }
+
+    return arbolArray;
+}
+
+//función recursiva que completa un arreglo con los elementos en orden del arbol
+//el arreglo es devuelto por la función anterior
+void nodoToArray(nodoArbol * arbol, int * array, int * validos)
+{
+    if (arbol != NULL)
+    {
+        nodoToArray(arbol->izq, array, validos);
+
+        array[*validos] = arbol->dato;
+        (*validos)++;
+
+        nodoToArray(arbol->der, array, validos);
+    }
+}
+
 
 
 //----------FUNCIONES DE MUESTRA DEL ARBOL
@@ -132,7 +162,7 @@ void mostrarNodoArbol(nodoArbol * nodo){
     if(nodo != NULL)
     {
         printf("\ndato: %i\n", nodo->dato);
-        
+
         if(nodo->izq == NULL)
             printf("no ");
         printf("posee nodo hijo izquierdo\n");
@@ -213,7 +243,7 @@ int cantNodos(nodoArbol * arbol)
         nodos += cantNodos(arbol->der);
     }
 
-    return nodos;    
+    return nodos;
 }
 
 //devuelve la cantidad de hojas de un arbol
@@ -232,9 +262,8 @@ int cantHojas(nodoArbol * arbol)
             hojas += cantHojas(arbol->izq);
             hojas += cantHojas(arbol->der);
         }
-        
-        return hojas;
     }
+    return hojas;
 }
 
 //devuelve un puntero al nodo más a la derecha de un arbol pasado por referencia
@@ -253,6 +282,15 @@ nodoArbol * nodoExtremoIzquierdo(nodoArbol * arbol)
     if (arbol->izq != NULL)
         nodoExtIzq = nodoExtremoIzquierdo(arbol->izq);
     return nodoExtIzq;
+}
+
+//muestra un arreglo de enteros pasado por referencia
+void mostrarArrayArbol(int * array, int validos)
+{
+    printf("|");
+
+    for (int i = 0; i < validos; i++)
+        printf(" %i |", array[i]);
 }
 
 //asd

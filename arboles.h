@@ -9,7 +9,7 @@
 //----------------estructura principal
 
 typedef struct nodoArbol{
-    int dato;                   
+    int dato;
     struct nodoArbol * izq;
     struct nodoArbol * der;
 }nodoArbol;
@@ -20,13 +20,15 @@ typedef struct nodoArbol{
 
 //                                             DONE
 //funciones de manipulación del arbol
-nodoArbol * inicArbol();                        //      
+nodoArbol * inicArbol();                        //
 nodoArbol * insertar(nodoArbol*, int);          //
 nodoArbol * buscar(nodoArbol*, int);            //
-nodoArbol * borrar(nodoArbol*, int);            // no anda del todo bien, a veces falla
+nodoArbol * borrar(nodoArbol*, int);            //
 nodoArbol * balancearArbol(nodoArbol*);
 nodoArbol * crearNodoArbol(int);                //
 int datoRandomArbol();                          //
+int * arbolToArray(nodoArbol*);                 //
+void nodoToArray(nodoArbol*, int*, int*);       //
 
 //funciones de muestra del arbol
 void mostrarNodoArbol(nodoArbol*);              //
@@ -41,6 +43,7 @@ int cantNodos(nodoArbol*);                      //
 int cantHojas(nodoArbol*);                      //
 nodoArbol * nodoExtremoDerecho(nodoArbol*);     //
 nodoArbol * nodoExtremoIzquierdo(nodoArbol*);   //
+void mostrarArrayArbol(int*, int);
 
 
 
