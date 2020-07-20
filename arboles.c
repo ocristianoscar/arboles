@@ -53,17 +53,17 @@ nodoArbol * borrar(nodoArbol* arbol, int dato)
 {
     if (arbol != NULL)
     {
-        if (dato == arbol->dato)
-        {
-            if (arbol->der != NULL)
-            {
+        if (dato == arbol->dato)    //si la raiz del arbol es el dato a borrar, lo reemplaza por el proximo
+        {                           //mas grande, si existe
+            if (arbol->der != NULL) 
+            {                       
                 nodoArbol * nodoMasIzq = nodoExtremoIzquierdo(arbol->der);
                 arbol->dato = nodoMasIzq->dato;
                 arbol->der = borrar(arbol->der, nodoMasIzq->dato);
             }
-            else
-            {
-                if (arbol->izq != NULL)
+            else    //de lo contrario, lo reemplaza por el próximo más chico, si existe
+            {       //si tampoco existe, significa que es nodo que reemplazó el nodo borrado
+                if (arbol->izq != NULL)                     //por lo tanto lo elimina
                 {
                     nodoArbol * nodoMasDer = nodoExtremoDerecho(arbol->izq);
                     arbol->dato = nodoMasDer->dato;
@@ -77,7 +77,7 @@ nodoArbol * borrar(nodoArbol* arbol, int dato)
                 }
             }
         }
-        else
+        else    //si la raiz del arbol no es el dato a borrar, sigue buscando en el arbol
         {
             if (dato > arbol->dato)
                 arbol->der = borrar(arbol->der, dato);
@@ -92,17 +92,26 @@ nodoArbol * borrar(nodoArbol* arbol, int dato)
 //balancea un arbol binario
 nodoArbol * balancearArbol(nodoArbol * arbol)
 {
-    /*
-     *pasar todos los datos ordenados a un arreglo
-     *cortar el arreglo a la mitad. El numero de la mitad será la raiz del arbol
-     **aqui hay que considerar que pasa si es numero par o impar, o si son 1 o 2 elementos
-     *poner la raiz como primer elemento de un nuevo arreglo.
-     **al final, este arreglo representa un arbol mostrado en pre-orden
-     *volver a hacer esta operación con cada una de las mitades hasta que solo quede 1 elemento
-     *se ingresan los elementos del arreglo y se crea un nuevo arbol
-     **de esta forma entra primero la raiz, luego los hijos, y estos a su vez son nuevos sub-arboles
-     *de esta forma queda un arbol balanceado
-    */
+    /*-----------FUNCIÓN ACTUALMENTE EN PROCESO - 19 DE JULIO DE 2020
+     *pasar todos los datos ordenados a un arreglo*/
+
+        int* arrayArbol = arbolToArray(arbol);
+        int validos = cantNodos(arbol);
+        //mostrarArrayArbol(array, validos);
+
+        nodoArbol * arrayBalanceado = NULL;
+        int * valBan = NULL;
+        nodoArbol * arrayIzq = NULL;
+        nodoArbol * arrayDer = NULL;
+
+        arrayArbolToPreOrden(arrayArbol, validos, arrayBalanceado, valBan,
+                            arrayIzq, INIC_BAL, arrayDer, INIC_BAL);
+        
+        nodoArbol * arbolBalanceado = NULL;
+
+        arrayPreOrdenToArbolBalanceado(arbolBalanceado, arrayBalanceado);
+
+        return arbolBalanceado;     
 }
 
 //devuelve un puntero a un nodoArbol con el valor entero ingresado por parámetro como dato
@@ -124,7 +133,7 @@ int datoRandomArbol(){
 }
 
 //crea un arreglo de enteros con tamaño justo para almacenar todos los elementos del arbol
-//se vale de la siguiente función para completar el arreglo, y lo devuelve
+//se vale de la función nodoToArray() para completar el arreglo, y lo devuelve
 int * arbolToArray(nodoArbol * arbol)
 {
     int * arbolArray = (int*)malloc(sizeof(cantNodos(arbol)));
@@ -139,7 +148,7 @@ int * arbolToArray(nodoArbol * arbol)
 }
 
 //función recursiva que completa un arreglo con los elementos en orden del arbol
-//el arreglo es devuelto por la función anterior
+//el arreglo es devuelto por la función arbolToArray()
 void nodoToArray(nodoArbol * arbol, int * array, int * validos)
 {
     if (arbol != NULL)
@@ -151,6 +160,33 @@ void nodoToArray(nodoArbol * arbol, int * array, int * validos)
 
         nodoToArray(arbol->der, array, validos);
     }
+}
+
+//recibe un array con los elementos del arbol en orden, su numero de elementos (validos del array),
+//un puntero al array donde se van a grabar los elementos en PreOrden (el array balanceado), un puntero
+//a un int que va a ir creciendo a medida que se van grabando los elementos, y dos punteros a los sub-arrays
+//que representan las ramas izquierda y derecha, con sus válidos. Para el inicio de la funcion, los validos
+//se inicializan con el valor INIC_VAL
+void arrayArbolToPreOrden(int * arrayArbol, int validos, int * arrayBalanceado, int * valBan,
+                        int * arrayIzq, int valIzq, int * arrayDer, int valDer)
+{
+    /*   
+     *cortar el arreglo a la mitad. El numero de la mitad será la raiz del arbol
+     **si los elementos son impares, la parte entera de elementos/2 da el índice del arreglo correspondiente 
+     **a la nueva raiz
+     **si los elementos son pares, (elementos/2) + 1 es el índice del arreglo correspondiente a la nueva raiz
+     *poner la raiz como primer elemento de un nuevo arreglo.
+     **al final, este arreglo representa un arbol mostrado en pre-orden
+     *volver a hacer esta operación con cada una de las mitades hasta que solo quede 1 elemento
+     *se ingresan los elementos del arreglo en orden a un nuevo arbol
+     **de esta forma entra primero la raiz, luego los hijos, y estos a su vez son nuevos sub-arboles
+     *de esta forma queda un arbol balanceado
+    */    
+}
+
+void arrayPreOrdenToArbolBalanceado(nodoArbol * arbolBalanceado, int * arrayBalanceado)
+{
+    
 }
 
 

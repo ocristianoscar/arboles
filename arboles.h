@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define INIC_BAL -1
+
 
 
 //----------------estructura principal
@@ -29,6 +31,8 @@ nodoArbol * crearNodoArbol(int);                //
 int datoRandomArbol();                          //
 int * arbolToArray(nodoArbol*);                 //
 void nodoToArray(nodoArbol*, int*, int*);       //
+void arrayArbolToPreOrden(int*, int, int*, int*, int*, int, int*, int);
+void arrayPreOrdenToArbolBalanceado(nodoArbol * arbolBalanceado, int * arrayBalanceado);
 
 //funciones de muestra del arbol
 void mostrarNodoArbol(nodoArbol*);              //

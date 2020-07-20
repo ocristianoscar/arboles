@@ -4,11 +4,15 @@
 
 #include "arboles.h"
 
+#define O_MINUS 162
+#define I_MINUS 161
+#define A_MINUS 160
+
 
 
 int main()
 {
-    printf("Demostración de la librería de árboles binarios\n");
+    printf("Demostraci%cn de la librer%ca de %crboles binarios\n", O_MINUS, I_MINUS, A_MINUS);
 
     srand(time(NULL));
 
@@ -36,13 +40,13 @@ int main()
     /*int* array = arbolToArray(arbol);
     int validos = cantNodos(arbol);
 
-    mostrarArrayArbol(array, validos);
+    mostrarArrayArbol(array, validos);*/
 
     printf("\n");
 
     printf("\nla cantidad de niveles del arbol es de %i", cantNiveles(arbol));
     printf("\nla cantidad de nodos del arbol es de %i", cantNodos(arbol));
-    printf("\nla cantidad de hojas del arbol es de %i", cantHojas(arbol));*/
+    printf("\nla cantidad de hojas del arbol es de %i", cantHojas(arbol));
 
     printf("\n");
 
