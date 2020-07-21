@@ -148,9 +148,7 @@ int * arbolToArray(nodoArbol * arbol)
     int validos = 0;
 
     if(arbol != NULL)
-    {
         nodoToArray(arbol, arbolArray, &validos);
-    }
 
     return arbolArray;
 }
@@ -179,8 +177,48 @@ void nodoToArray(nodoArbol * arbol, int * array, int * validos)
 void arrayArbolToPreOrden(int * arrayArbol, int validos, int * arrayBalanceado, int * valBan,
                         int * arrayIzq, int valIzq, int * arrayDer, int valDer)
 {
+    if ((valIzq && valDer) == -1)   //es la primera vez que se ejecuta la función
+    {   
+        if((validos<4) || (validos>0))  //solo se necesita una iteracion
+        {
+            switch (validos)    
+            {
+            case 1:     //tiene solo un elemento 
+                guardarEnArrayBalanceado(arrayArbol, arrayBalanceado, valBan);
+                break;
+            case 2:     //tiene una raiz y un unico hijo
+                guardarEnArrayBalanceado(arrayArbol, arrayBalanceado, valBan);
+                guardarEnArrayBalanceado(arrayArbol[1], arrayBalanceado, valBan);
+                break;
+            case 3:
+                procedimientoNodoNormal(arrayArbol, arrayArbol[1], arrayArbol[2]);
+                break;
+            default: break;
+            }
+        }
+        else
+        {
+            if (validos >= 4)
+            {
+                //es mayor a 3 y sigue el flujo normal de la función
+                //recursiones ahead
+            }
+            else
+            {
+                //validos < 0
+            }
+        }
+    }
+    else
+    {
+        //no es la primera iteración
+        //la raiz de la iteración anterior ya fue guardada en el array
+        //tenemos que encargarnos de los dos arrays recibidos y volver a recursionarlos
+    }
+    
+    
     /*
-    *-----------FUNCIÓN ACTUALMENTE EN PROCESO - 19 DE JULIO DE 2020
+    *-----------FUNCIÓN ACTUALMENTE EN PROCESO - 20 DE JULIO DE 2020
 
      **estoy creando un algoritmo en papel
 
@@ -197,13 +235,28 @@ void arrayArbolToPreOrden(int * arrayArbol, int validos, int * arrayBalanceado, 
     */
 }
 
+void guardarEnArrayBalanceado(arrayArbol)
+{
+
+}
+
+void procedimientoNodoNormal(int * primerElemento, int * segundoElemento, int * tercerElemento)
+{
+    guardarEnArrayBalanceado(arrayArbol[1], arrayBalanceado, valBan);
+    guardarEnArrayBalanceado(arrayArbol[0], arrayBalanceado, valBan);
+    guardarEnArrayBalanceado(arrayArbol[2], arrayBalanceado, valBan);
+}
+
 void arrayPreOrdenToArbolBalanceado(nodoArbol * arbolBalanceado, int * arrayBalanceado)
 {
 
 }
 
 
+void guardarEnArrayBalanceado(arrayArbol)
+{
 
+}
 
 
 
