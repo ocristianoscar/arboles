@@ -36,8 +36,11 @@ int * arbolToArray(nodoArbol*);                                                 
 void nodoToArray(nodoArbol*, int*, int*);                                                   //
 void arrayArbolToPreOrden(int*, int, int*, int*, int*, int, int*, int);
 void arrayPreOrdenToArbolBalanceado(nodoArbol*, int*);
-void guardarEnArrayBalanceado(int*, int*, int*)
-void procedimientoNodoNormal(int*, int*, int*);
+void guardarEnArrayBalanceado(int*, int*, int);
+void procedimientoNodoNormal(int*, int*, int, int*, int*, int*);
+int extraerRaiz(int*, int);
+//extraerRaizAndSetearHijos(arrayBalanceado, valBan, arrayArbol, validos,
+  //                                      arrayIzq, valIzq, arrayDer, valDer);
 
 
 //funciones de muestra del arbol               DONE

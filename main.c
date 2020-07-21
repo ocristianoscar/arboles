@@ -18,7 +18,7 @@ int main()
 
     nodoArbol * arbol = inicArbol();
 
-    nodoArbol * nodo = crearNodoArbol(5);
+    //nodoArbol * nodo = crearNodoArbol(5);
 
     //mostrarNodoArbol(nodo);
 
