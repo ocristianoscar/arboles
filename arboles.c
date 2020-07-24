@@ -135,7 +135,7 @@ nodoArbol * balancearArbol(nodoArbol * arbol)
 
         nodoArbol * arbolBalanceado = NULL;
 
-        arrayPreOrdenToArbolBalanceado(arbolBalanceado, arrayBalanceado);
+        arrayPreOrdenToArbolBalanceado(arbolBalanceado, arrayBalanceado, *valBan);
 
         return arbolBalanceado;
 }
@@ -281,24 +281,23 @@ void arrayArbolToPreOrden(int * arrayArbol, int validos, int * arrayBalanceado, 
 void guardarEnArrayBalanceado(int * arrayBalanceado, int * valBan, int elemento)
 {
     arrayBalanceado[*valBan] = elemento;
+    (*valBan)++;
 }
 
-/*void procedimientoNodoNormal(int * arrayArbol, int * arrayBalanceado, int valBan, int * primerElemento, int * segundoElemento, int * tercerElemento)
+//inserta los datos del array balanceado en un arbol, haciendo que este quede balanceado
+void arrayPreOrdenToArbolBalanceado(nodoArbol * arbolBalanceado, int * arrayBalanceado, int valBan)
 {
-    guardarEnArrayBalanceado(&arrayArbol[1], arrayBalanceado, valBan);
-    guardarEnArrayBalanceado(&arrayArbol[0], arrayBalanceado, valBan);
-    guardarEnArrayBalanceado(&arrayArbol[2], arrayBalanceado, valBan);
-}*/
-
-void arrayPreOrdenToArbolBalanceado(nodoArbol * arbolBalanceado, int * arrayBalanceado)
-{
-
+    for (int i = 0; i < valBan; i++)
+    {
+        insertar(arbolBalanceado, arrayBalanceado[i]);
+    } 
 }
 
+//devuelve el índice de la raiz del arreglo del arbol que se pasa por parámetro
 int extraerIndiceRaiz(int * arrayArbol, int validos)
 {
-        int raiz = 0;
-        return raiz;
+    int raiz = 0;
+    return raiz;
 }
 
 
