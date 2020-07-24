@@ -126,12 +126,12 @@ nodoArbol * balancearArbol(nodoArbol * arbol)
         //mostrarArrayArbol(array, validos);
 
         int * arrayBalanceado = (int*)malloc(sizeof(int)*validos);
-        int * arrayIzq = NULL;
-        int * arrayDer = NULL;
+        //int * arrayIzq = NULL;
+        //int * arrayDer = NULL;
         int * valBan = NULL;
+        *valBan = 0;
 
-        arrayArbolToPreOrden(arrayArbol, validos, arrayBalanceado, valBan,
-                            arrayIzq, INIC_BAL, arrayDer, INIC_BAL);
+        arrayArbolToPreOrden(arrayArbol, validos, arrayBalanceado, valBan, INIC_BAL);
 
         nodoArbol * arbolBalanceado = NULL;
 
@@ -174,24 +174,26 @@ void nodoToArray(nodoArbol * arbol, int * array, int * validos)
 //a un int que va a ir creciendo a medida que se van grabando los elementos, y dos punteros a los sub-arrays
 //que representan las ramas izquierda y derecha, con sus válidos. Para el inicio de la funcion, los validos
 //se inicializan con el valor INIC_VAL
-void arrayArbolToPreOrden(int * arrayArbol, int validos, int * arrayBalanceado, int * valBan,
-                        int * arrayIzq, int valIzq, int * arrayDer, int valDer)
+void arrayArbolToPreOrden(int * arrayArbol, int validos, int * arrayBalanceado, int * valBan, int flag)
 {
-    if ((valIzq == INIC_BAL) && (valDer == INIC_BAL) )   //es la primera vez que se ejecuta la función
+    if (flag == INIC_BAL)   //es la primera vez que se ejecuta la función
     {
         if((validos<4) || (validos>0))  //solo se necesita una iteracion
         {
             switch (validos)
             {
             case 1:     //tiene solo un elemento
-                guardarEnArrayBalanceado(arrayArbol, arrayBalanceado, *valBan);
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol));
                 break;
             case 2:     //tiene una raiz y un unico hijo
-                guardarEnArrayBalanceado(arrayArbol, arrayBalanceado, *valBan);
-                guardarEnArrayBalanceado(&arrayArbol[1], arrayBalanceado, *valBan);
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol));
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + 1));
                 break;
             case 3:
-                procedimientoNodoNormal(arrayArbol, arrayBalanceado, *valBan, &arrayArbol[1], &arrayArbol[2], &arrayArbol[2]);
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + 1));
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol));
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + 2));
+                //procedimientoNodoNormal(arrayArbol, arrayBalanceado, *valBan, &arrayArbol[1], &arrayArbol[2], &arrayArbol[2]);
                 break;
             default: break;
             }
@@ -206,18 +208,24 @@ void arrayArbolToPreOrden(int * arrayArbol, int validos, int * arrayBalanceado, 
                 //extraerRaizAndSetearHijos(arrayBalanceado, valBan, arrayArbol, validos,
                 //                        arrayIzq, valIzq, arrayDer, valDer);
 
-                int indiceRaiz = extraerRaiz(arrayArbol, validos);
-                guardarEnArrayBalanceado(arrayBalanceado, valBan, arrayArbol[indiceRaiz]);
+                int indiceRaiz = extraerIndiceRaiz(arrayArbol, validos);
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + indiceRaiz));
 
-                valIzq = indiceRaiz;            //arrayIzq sería desde indice 0 hasta raiz-1
-                int raizIzq = extraerRaiz(arrayArbol, valIzq);
-                guardarEnArrayBalanceado(arrayArbol, valBan, arrayArbol[raizIzq]);
+                int valIzq = indiceRaiz;            //ya que el indice de la raiz del arbol principal es igual a
+                                                //los validos del sub array izquierdo
+                int raizIzq = extraerIndiceRaiz(arrayArbol, valIzq);
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + raizIzq));
 
-                valDer = validos - indiceRaiz;   //arrayDer va desde un elemento delante de la raiz hasta validos
-                int raizDer = extraerRaiz(arrayArbol, valDer);
-                guardarEnArrayBalanceado(arrayArbol, valBan, arrayArbol[raizDer]);
+                int valDer = validos - (indiceRaiz + 1);    //arrayDer va desde un elemento delante de la raiz
+                                                            //hasta validos
+
+                int raizDer = extraerIndiceRaiz(&arrayArbol[indiceRaiz + 1], valDer);
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + raizDer));
 
                 //llamadas a recursion de ambos sub arrays
+
+                arrayArbolToPreOrden(arrayArbol, valIzq, arrayBalanceado, valBan, 1);
+                arrayArbolToPreOrden(&(arrayArbol[indiceRaiz + 1]), valDer, arrayBalanceado, valBan, 1);
 
             }
             else
@@ -231,45 +239,63 @@ void arrayArbolToPreOrden(int * arrayArbol, int validos, int * arrayBalanceado, 
         //no es la primera iteración
         //la raiz de la iteración anterior ya fue guardada en el array
         //tenemos que encargarnos de los dos arrays recibidos y volver a recursionarlos
+
+        if (validos <= 3)
+        {
+            switch (validos)        //todo esto es igual al anterior caso asi que se puede hacer una funcion
+            {
+            case 1:
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol));
+                break;
+            case 2:
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol));
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + 1));
+                break;
+            case 3:
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + 1));
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol));
+                guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + 2));
+                break;
+            default: break;
+            }
+        }
+        else
+        {
+            int indiceRaiz = extraerIndiceRaiz(arrayArbol, validos);
+            guardarEnArrayBalanceado(arrayBalanceado, valBan, *(arrayArbol + indiceRaiz));
+
+            int valIzq = indiceRaiz;            //ya que el indice de la raiz del arbol principal es igual a
+                                                //los validos del sub array izquierdo
+
+            int valDer = validos - (indiceRaiz + 1);    //arrayDer va desde un elemento delante de la raiz
+                                                        //hasta validos
+            
+            //llamadas a recursión
+            arrayArbolToPreOrden(arrayArbol, valIzq, arrayBalanceado, valBan, 1);
+            arrayArbolToPreOrden((arrayArbol + (indiceRaiz + 1)), valDer, arrayBalanceado, valBan, 1);
+        }
     }
-
-
-    /*
-    *-----------FUNCIÓN ACTUALMENTE EN PROCESO - 20 DE JULIO DE 2020
-
-     **estoy creando un algoritmo en papel
-
-     *cortar el arreglo a la mitad. El numero de la mitad será la raiz del arbol
-     **si los elementos son impares, la parte entera de elementos/2 da el índice del arreglo correspondiente
-     **a la nueva raiz
-     **si los elementos son pares, (elementos/2) + 1 es el índice del arreglo correspondiente a la nueva raiz
-     *poner la raiz como primer elemento de un nuevo arreglo.
-     **al final, este arreglo representa un arbol mostrado en pre-orden
-     *volver a hacer esta operación con cada una de las mitades hasta que solo quede 1 elemento
-     *se ingresan los elementos del arreglo en orden a un nuevo arbol
-     **de esta forma entra primero la raiz, luego los hijos, y estos a su vez son nuevos sub-arboles
-     *de esta forma queda un arbol balanceado
-    */
 }
 
-void guardarEnArrayBalanceado(int * arrayBalanceado, int * valBan, int indiceRaiz)
+//recibe un elemento entero y lo guarda en el array balanceado
+void guardarEnArrayBalanceado(int * arrayBalanceado, int * valBan, int elemento)
 {
-
+    arrayBalanceado[*valBan] = elemento;
 }
 
-void procedimientoNodoNormal(int * arrayArbol, int * arrayBalanceado, int valBan, int * primerElemento, int * segundoElemento, int * tercerElemento)
+/*void procedimientoNodoNormal(int * arrayArbol, int * arrayBalanceado, int valBan, int * primerElemento, int * segundoElemento, int * tercerElemento)
 {
     guardarEnArrayBalanceado(&arrayArbol[1], arrayBalanceado, valBan);
     guardarEnArrayBalanceado(&arrayArbol[0], arrayBalanceado, valBan);
     guardarEnArrayBalanceado(&arrayArbol[2], arrayBalanceado, valBan);
-}
+}*/
 
 void arrayPreOrdenToArbolBalanceado(nodoArbol * arbolBalanceado, int * arrayBalanceado)
 {
 
 }
 
-int extraerRaiz(int * arrayArbol, int validos)
+int extraerIndiceRaiz(int * arrayArbol, int validos)
 {
         int raiz = 0;
         return raiz;

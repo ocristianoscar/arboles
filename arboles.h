@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define INIC_BAL -1
+#define INIC_BAL 0
 
 
 
@@ -34,7 +34,7 @@ int datoRandomArbol();                                                          
 nodoArbol * balancearArbol(nodoArbol*);                                                     //
 int * arbolToArray(nodoArbol*);                                                             //
 void nodoToArray(nodoArbol*, int*, int*);                                                   //
-void arrayArbolToPreOrden(int*, int, int*, int*, int*, int, int*, int);
+void arrayArbolToPreOrden(int*, int, int*, int*, int);
 void arrayPreOrdenToArbolBalanceado(nodoArbol*, int*);
 void guardarEnArrayBalanceado(int*, int*, int);
 void procedimientoNodoNormal(int*, int*, int, int*, int*, int*);
